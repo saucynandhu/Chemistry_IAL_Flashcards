@@ -2,7 +2,7 @@
 
 A lightweight, single-file flashcard web app for A-Level organic chemistry — no frameworks, no build step, no dependencies. Just open the HTML file and study.
 
-**[→ Live site](https://your-username.github.io/your-repo-name)** ← update this link after you deploy
+**[→ Live site](https://chemistryial.netlify.app/)** 
 
 ---
 
