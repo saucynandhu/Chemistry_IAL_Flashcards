@@ -216,7 +216,7 @@
     background: var(--text);
     border-color: var(--text);
     height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   /* decorative corner on front */
@@ -276,6 +276,8 @@
     line-height: 1.6;
     max-width: 560px;
     margin-bottom: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .card-detail {
@@ -284,6 +286,8 @@
     color: #9a9488;
     line-height: 1.5;
     max-width: 540px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   /* Controls */
@@ -593,14 +597,18 @@ function tagClass(cat) {
 
 function syncHeight() {
   const front = document.querySelector('.card-face.front');
+  const back = document.querySelector('.card-face.back');
   const scene = document.getElementById('cardScene');
   const inner = document.getElementById('cardInner');
   // measure front face natural height
-  const h = front.offsetHeight;
-  scene.style.height = h + 'px';
-  inner.style.height = h + 'px';
+  const frontHeight = front.offsetHeight;
+  const backHeight = back.offsetHeight;
+  // use the greater height to accommodate both faces
+  const maxHeight = Math.max(frontHeight, backHeight);
+  scene.style.height = maxHeight + 'px';
+  inner.style.height = maxHeight + 'px';
   // also size the back face to match
-  document.querySelector('.card-face.back').style.height = h + 'px';
+  back.style.height = maxHeight + 'px';
 }
 
 function render() {
