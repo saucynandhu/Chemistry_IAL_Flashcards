@@ -438,12 +438,56 @@
 
   .btn-restart:hover { background: transparent; color: var(--text); }
 
+  /* Footer */
+  footer {
+    max-width: 780px;
+    margin: 4rem auto 0;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .social-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    transition: all 0.15s ease;
+  }
+
+  .social-links a:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
   @media (max-width: 540px) {
     header { padding: 2rem 1.2rem 1rem; }
     .main { padding: 0 1.2rem 3rem; }
     .controls { flex-wrap: wrap; }
     .btn-shuffle { margin-left: 0; }
     .card-face { padding: 1.8rem 1.2rem; }
+    footer { padding: 1.5rem 1.2rem; }
+    .social-links { flex-wrap: wrap; gap: 0.8rem; }
   }
 </style>
 </head>
@@ -520,6 +564,14 @@
   </div>
 
 </div>
+
+<footer>
+  <p class="footer-text">Created for A-Level Chemistry revision</p>
+  <div class="social-links">
+    <a href="https://github.com/saucynandhu" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://instagram.com/nandhu_sauce" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</footer>
 
 <script>
 const CARDS = [
