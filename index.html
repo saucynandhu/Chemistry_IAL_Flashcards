@@ -81,6 +81,39 @@
     font-weight: 300;
   }
 
+  /* Tab Navigation */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    max-width: 780px;
+    margin: 2.5rem auto 0;
+    padding: 0 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
   .main {
     max-width: 780px;
     margin: 0 auto;
@@ -89,12 +122,50 @@
     z-index: 1;
   }
 
+  /* View container */
+  .view {
+    display: none;
+  }
+
+  .view.active {
+    display: block;
+  }
+
   /* Category filter */
   .cat-row {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 2rem;
+  }
+
+  .search-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--text);
+    background: white;
+  }
+
+  .search-input::placeholder {
+    color: var(--muted);
   }
 
   .cat-btn {
@@ -173,8 +244,6 @@
     min-height: 200px;
   }
 
-  /* The inner wrapper doubles in height to hold both faces stacked;
-     we shift it up by 50% so only one face is visible at a time */
   .card-inner {
     width: 100%;
     position: relative;
@@ -206,14 +275,11 @@
     box-sizing: border-box;
   }
 
-  /* front sits normally in flow */
   .card-face.front {
     position: relative;
     overflow: hidden;
   }
 
-  /* back is absolutely positioned on top, rotated 180deg,
-     same size as front — we read its height from JS */
   .card-face.back {
     position: absolute;
     inset: 0;
@@ -224,7 +290,6 @@
     overflow: hidden;
   }
 
-  /* decorative corner on front */
   .card-face.front::after {
     content: '';
     position: absolute;
@@ -253,6 +318,14 @@
   .tag-grignard  { background: var(--amber-light); color: var(--amber); }
   .tag-test      { background: var(--blue-light); color: var(--blue); }
 
+  .card-metadata {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.06em;
+  }
+
   .card-q {
     font-size: clamp(15px, 2.5vw, 18px);
     font-weight: 400;
@@ -273,7 +346,6 @@
     z-index: 1;
   }
 
-  /* back face */
   .card-a {
     font-size: clamp(14px, 2.2vw, 16px);
     font-weight: 400;
@@ -321,6 +393,36 @@
   .btn:disabled { opacity: 0.25; cursor: default; }
   .btn-shuffle { margin-left: auto; }
 
+  /* Multiple Choice */
+  .mc-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  .mc-option {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
+
+  .mc-option:hover { border-color: var(--text); background: #faf9f6; }
+
+  .mc-option.selected { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .mc-option.correct { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
+  .mc-option.incorrect { background: #fce8e4; color: var(--accent); border-color: var(--accent); }
+
   /* Score row */
   .score-row {
     display: flex;
@@ -359,7 +461,6 @@
 
   .btn-missed:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  /* keyboard hint */
   .key-hint {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -399,6 +500,7 @@
     gap: 16px;
     justify-content: center;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
   }
 
   .results-stat {
@@ -437,6 +539,177 @@
   }
 
   .btn-restart:hover { background: transparent; color: var(--text); }
+
+  /* Statistics View */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stat-card .big-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-card .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .mastery-breakdown {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .mastery-breakdown h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .mastery-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .mastery-item:last-child { border-bottom: none; }
+
+  .mastery-label {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+  }
+
+  .mastery-count {
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Settings View */
+  .settings-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-section h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .settings-group {
+    margin-bottom: 1rem;
+  }
+
+  .settings-group:last-child { margin-bottom: 0; }
+
+  .settings-label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .settings-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .btn-small {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  .btn-small:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .btn-danger {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-danger:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    resize: vertical;
+    margin-bottom: 0.75rem;
+  }
+
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--text);
+    background: #fafaf8;
+  }
+
+  textarea::placeholder, input[type="text"]::placeholder {
+    color: var(--muted);
+  }
+
+  .data-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid #b5d4c3;
+    margin-bottom: 1rem;
+  }
 
   /* Footer */
   footer {
@@ -488,6 +761,8 @@
     .card-face { padding: 1.8rem 1.2rem; }
     footer { padding: 1.5rem 1.2rem; }
     .social-links { flex-wrap: wrap; gap: 0.8rem; }
+    .tabs-nav { padding: 0 1.2rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -499,68 +774,248 @@
   <p class="subtitle">52 cards — aliphatic · aromatic · Grignard · functional group tests</p>
 </header>
 
+<!-- Navigation Tabs -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="study">Study</button>
+  <button class="tab-btn" data-tab="mc">MC Mode</button>
+  <button class="tab-btn" data-tab="stats">Stats</button>
+  <button class="tab-btn" data-tab="settings">⚙ Settings</button>
+</nav>
+
 <div class="main">
 
-  <div class="cat-row" id="catRow"></div>
+  <!-- STUDY VIEW -->
+  <div class="view active" id="studyView">
+    <div class="cat-row" id="catRow"></div>
 
-  <div class="progress-wrap">
-    <span class="progress-label" id="progressLabel">Card 1 of 52</span>
-    <div class="score-badges">
-      <span class="badge badge-knew" id="knewBadge" style="display:none"></span>
-      <span class="badge badge-missed" id="missedBadge" style="display:none"></span>
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search cards...">
     </div>
-  </div>
 
-  <div class="progress-bar-bg">
-    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
-  </div>
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabel">Card 1 of 52</span>
+      <div class="score-badges">
+        <span class="badge badge-knew" id="knewBadge" style="display:none"></span>
+        <span class="badge badge-missed" id="missedBadge" style="display:none"></span>
+      </div>
+    </div>
 
-  <!-- Flashcard -->
-  <div id="cardSection">
-    <div class="card-scene" id="cardScene" onclick="flip()" title="Click to flip">
-      <div class="card-inner" id="cardInner">
-        <div class="card-face front">
-          <span class="card-cat-tag" id="frontTag"></span>
-          <p class="card-q" id="questionText"></p>
-          <p class="card-hint">click to reveal answer</p>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div id="cardSection">
+      <div class="card-scene" id="cardScene" onclick="flip()" title="Click to flip">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face front">
+            <span class="card-cat-tag" id="frontTag"></span>
+            <span class="card-metadata" id="frontMeta"></span>
+            <p class="card-q" id="questionText"></p>
+            <p class="card-hint">click to reveal answer</p>
+          </div>
+          <div class="card-face back">
+            <span class="card-cat-tag" id="backTag"></span>
+            <p class="card-a" id="answerText"></p>
+            <p class="card-detail" id="detailText"></p>
+          </div>
         </div>
-        <div class="card-face back">
-          <span class="card-cat-tag" id="backTag"></span>
-          <p class="card-a" id="answerText"></p>
-          <p class="card-detail" id="detailText"></p>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prev()">← prev</button>
+        <button class="btn" id="nextBtn" onclick="next()">next →</button>
+        <button class="btn btn-shuffle" onclick="shuffleStudy()">shuffle</button>
+      </div>
+
+      <div class="score-row" id="scoreRow" style="display:none">
+        <button class="btn btn-knew" onclick="markKnew()">✓ knew it</button>
+        <button class="btn btn-missed" onclick="markMissed()">✗ missed it</button>
+      </div>
+
+      <p class="key-hint">space = flip &nbsp;·&nbsp; ← → = navigate &nbsp;·&nbsp; k = knew &nbsp;·&nbsp; m = missed</p>
+    </div>
+
+    <div class="results" id="resultsScreen">
+      <p class="results-title" id="resultsTitle">Done!</p>
+      <p class="results-sub" id="resultsSub"></p>
+      <div class="results-grid">
+        <div class="results-stat stat-knew">
+          <span class="num" id="knewNum">0</span>
+          <span class="lbl">knew it</span>
+        </div>
+        <div class="results-stat stat-missed">
+          <span class="num" id="missedNum">0</span>
+          <span class="lbl">missed it</span>
         </div>
       </div>
+      <button class="btn-restart" onclick="restartStudy()">go again</button>
     </div>
-
-    <div class="controls">
-      <button class="btn" id="prevBtn" onclick="prev()">← prev</button>
-      <button class="btn" id="nextBtn" onclick="next()">next →</button>
-      <button class="btn btn-shuffle" onclick="shuffle()">shuffle</button>
-    </div>
-
-    <div class="score-row" id="scoreRow" style="display:none">
-      <button class="btn btn-knew" onclick="markKnew()">✓ knew it</button>
-      <button class="btn btn-missed" onclick="markMissed()">✗ missed it</button>
-    </div>
-
-    <p class="key-hint">space = flip &nbsp;·&nbsp; ← → = navigate &nbsp;·&nbsp; k = knew &nbsp;·&nbsp; m = missed</p>
   </div>
 
-  <!-- Results screen -->
-  <div class="results" id="resultsScreen">
-    <p class="results-title" id="resultsTitle">Done!</p>
-    <p class="results-sub" id="resultsSub"></p>
-    <div class="results-grid">
-      <div class="results-stat stat-knew">
-        <span class="num" id="knewNum">0</span>
-        <span class="lbl">knew it</span>
-      </div>
-      <div class="results-stat stat-missed">
-        <span class="num" id="missedNum">0</span>
-        <span class="lbl">missed it</span>
+  <!-- MC MODE VIEW -->
+  <div class="view" id="mcView">
+    <div class="cat-row" id="catRowMC"></div>
+
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInputMC" placeholder="Search cards...">
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabelMC">Card 1 of 52</span>
+      <div class="score-badges">
+        <span class="badge badge-knew" id="knewBadgeMC" style="display:none"></span>
+        <span class="badge badge-missed" id="missedBadgeMC" style="display:none"></span>
       </div>
     </div>
-    <button class="btn-restart" onclick="restart()">go again</button>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFillMC" style="width:0%"></div>
+    </div>
+
+    <div id="cardSectionMC">
+      <div class="card-scene" id="cardSceneMC" style="cursor: default;">
+        <div class="card-inner" id="cardInnerMC">
+          <div class="card-face front">
+            <span class="card-cat-tag" id="frontTagMC"></span>
+            <p class="card-q" id="questionTextMC"></p>
+            <div class="mc-options" id="mcOptions"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtnMC" onclick="prevMC()">← prev</button>
+        <button class="btn" id="nextBtnMC" onclick="nextMC()">next →</button>
+        <button class="btn btn-shuffle" onclick="shuffleMC()">shuffle</button>
+      </div>
+
+      <div class="score-row" id="scoreRowMC" style="display:none">
+        <button class="btn btn-knew" onclick="markKnewMC()">✓ correct</button>
+        <button class="btn btn-missed" onclick="markMissedMC()">✗ incorrect</button>
+      </div>
+    </div>
+
+    <div class="results" id="resultsScreenMC">
+      <p class="results-title" id="resultsTitleMC">Done!</p>
+      <p class="results-sub" id="resultsSubMC"></p>
+      <div class="results-grid">
+        <div class="results-stat stat-knew">
+          <span class="num" id="knewNumMC">0</span>
+          <span class="lbl">correct</span>
+        </div>
+        <div class="results-stat stat-missed">
+          <span class="num" id="missedNumMC">0</span>
+          <span class="lbl">incorrect</span>
+        </div>
+      </div>
+      <button class="btn-restart" onclick="restartMC()">go again</button>
+    </div>
+  </div>
+
+  <!-- STATISTICS VIEW -->
+  <div class="view" id="statsView">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="big-num" id="totalStudied">0</span>
+        <span class="label">cards studied</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-num" id="accuracyPct">0%</span>
+        <span class="label">accuracy</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-num" id="streakDays">0</span>
+        <span class="label">day streak</span>
+      </div>
+    </div>
+
+    <div class="mastery-breakdown">
+      <h3>mastery breakdown</h3>
+      <div class="mastery-item">
+        <span class="mastery-label">🆕 New</span>
+        <span class="mastery-count" id="masteryNew">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">📚 Learning</span>
+        <span class="mastery-count" id="masteryLearning">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">🎯 Familiar</span>
+        <span class="mastery-count" id="masteryFamiliar">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">⭐ Mastered</span>
+        <span class="mastery-count" id="masteryMastered">0</span>
+      </div>
+    </div>
+
+    <div class="mastery-breakdown">
+      <h3>category breakdown</h3>
+      <div class="mastery-item">
+        <span class="mastery-label">Aliphatic</span>
+        <span class="mastery-count" id="catAliphatic">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">Aromatic</span>
+        <span class="mastery-count" id="catAromatic">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">Grignard</span>
+        <span class="mastery-count" id="catGrignard">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">Functional Tests</span>
+        <span class="mastery-count" id="catTest">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div class="view" id="settingsView">
+    <div class="settings-section">
+      <h3>data & backup</h3>
+      <div class="settings-group">
+        <p class="data-status" id="dataStatus">✓ Data saved to browser</p>
+        <button class="btn-small" onclick="exportData()">export JSON</button>
+        <button class="btn-small" onclick="resetData()" style="border-color: var(--accent); color: var(--accent);">reset all data</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>import deck</h3>
+      <div class="settings-group">
+        <label class="settings-label">paste JSON deck below</label>
+        <p class="settings-desc">Paste a previously exported deck to restore or merge cards</p>
+        <textarea id="importTextarea" placeholder='Paste JSON export here...' rows="6"></textarea>
+        <button class="btn-small" onclick="importData()">import deck</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>add custom card</h3>
+      <div class="settings-group">
+        <label class="settings-label">question</label>
+        <input type="text" id="customQ" placeholder="What is the reaction...">
+      </div>
+      <div class="settings-group">
+        <label class="settings-label">answer</label>
+        <input type="text" id="customA" placeholder="Reagents and conditions...">
+      </div>
+      <div class="settings-group">
+        <label class="settings-label">details (optional)</label>
+        <input type="text" id="customDetail" placeholder="Mechanism or additional notes...">
+      </div>
+      <div class="settings-group">
+        <label class="settings-label">category</label>
+        <select id="customCat" style="width: 100%; padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; background: white; color: var(--text);">
+          <option value="aliphatic">Aliphatic</option>
+          <option value="aromatic">Aromatic</option>
+          <option value="grignard">Grignard</option>
+          <option value="test">Functional Tests</option>
+        </select>
+      </div>
+      <button class="btn-small" onclick="addCustomCard()">add card</button>
+    </div>
   </div>
 
 </div>
@@ -574,7 +1029,11 @@
 </footer>
 
 <script>
-const CARDS = [
+// ============================================
+// CARD DATA & INITIALIZATION
+// ============================================
+
+const ORIGINAL_CARDS = [
   {cat:"aliphatic",q:"Alkene → Poly(alkene)",a:"High pressure + catalyst (Ziegler-Natta or radical initiator)",detail:"Mechanism: addition polymerisation"},
   {cat:"aliphatic",q:"Alkene → Dihalogenoalkane (X₂)",a:"Br₂ or Cl₂, room temperature, no catalyst needed",detail:"Mechanism: electrophilic addition across C=C"},
   {cat:"aliphatic",q:"Alkene → Halogenoalkane (HX)",a:"HBr or HCl, room temperature, no catalyst",detail:"Markovnikov's rule: H adds to C with more H; electrophilic addition"},
@@ -628,8 +1087,6 @@ const CARDS = [
   {cat:"test",q:"Test for 1° or 2° alcohol, or aldehyde (oxidation test)",a:"K₂Cr₂O₇ / H₂SO₄ — orange to green colour change on warming",detail:"Ketones and carboxylic acids do NOT change dichromate; 3° alcohols: no change"}
 ];
 
-const cards = CARDS;
-
 const CAT_LABELS = {
   all: "All",
   aliphatic: "Aliphatic",
@@ -638,39 +1095,231 @@ const CAT_LABELS = {
   test: "Functional tests"
 };
 
-let activeCat = "all";
+// ============================================
+// STORAGE & DATA MANAGEMENT
+// ============================================
+
+class StorageManager {
+  constructor() {
+    this.STORAGE_KEY = 'chemistrry_flashcards_data';
+    this.CARDS_KEY = 'chemistry_cards';
+    this.STATS_KEY = 'chemistry_stats';
+    this.initData();
+  }
+
+  initData() {
+    if (!localStorage.getItem(this.STORAGE_KEY)) {
+      this.saveStats({
+        totalReviewed: 0,
+        totalCorrect: 0,
+        accuracy: 0,
+        studyStreak: 0,
+        createdAt: Date.now(),
+        lastStudy: null,
+        cardMetadata: {}
+      });
+      this.saveCards(this.enhanceCards(ORIGINAL_CARDS));
+    }
+  }
+
+  enhanceCards(cards) {
+    return cards.map((card, i) => ({
+      ...card,
+      id: `card-${i}`,
+      mastery: 0,
+      attempts: 0,
+      correct: 0,
+      lastReview: null,
+      nextReview: null
+    }));
+  }
+
+  saveCards(cards) {
+    localStorage.setItem(this.CARDS_KEY, JSON.stringify(cards));
+  }
+
+  getCards() {
+    const stored = localStorage.getItem(this.CARDS_KEY);
+    return stored ? JSON.parse(stored) : this.enhanceCards(ORIGINAL_CARDS);
+  }
+
+  saveStats(stats) {
+    localStorage.setItem(this.STATS_KEY, JSON.stringify(stats));
+  }
+
+  getStats() {
+    const stored = localStorage.getItem(this.STATS_KEY);
+    return stored ? JSON.parse(stored) : {
+      totalReviewed: 0,
+      totalCorrect: 0,
+      accuracy: 0,
+      studyStreak: 0,
+      createdAt: Date.now(),
+      lastStudy: null,
+      cardMetadata: {}
+    };
+  }
+
+  updateCardMetadata(cardId, updates) {
+    const cards = this.getCards();
+    const card = cards.find(c => c.id === cardId);
+    if (card) {
+      Object.assign(card, updates);
+      this.saveCards(cards);
+    }
+  }
+
+  updateStats(updates) {
+    const stats = this.getStats();
+    Object.assign(stats, updates);
+    this.saveStats(stats);
+  }
+
+  exportData() {
+    const cards = this.getCards();
+    const stats = this.getStats();
+    return JSON.stringify({ cards, stats, exportedAt: new Date().toISOString() }, null, 2);
+  }
+
+  importData(jsonString) {
+    try {
+      const data = JSON.parse(jsonString);
+      if (data.cards && Array.isArray(data.cards)) {
+        this.saveCards(data.cards);
+      }
+      if (data.stats && typeof data.stats === 'object') {
+        this.saveStats(data.stats);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  resetData() {
+    localStorage.removeItem(this.CARDS_KEY);
+    localStorage.removeItem(this.STATS_KEY);
+    this.initData();
+  }
+}
+
+const storage = new StorageManager();
+
+// ============================================
+// SPACED REPETITION & MASTERY
+// ============================================
+
+class SpacedRepetition {
+  static getIntervals() {
+    return [1, 3, 7, 14, 30]; // days
+  }
+
+  static updateMastery(card, wasCorrect) {
+    const intervals = this.getIntervals();
+    let newMastery = card.mastery;
+    
+    if (wasCorrect) {
+      newMastery = Math.min(3, newMastery + 1);
+    } else {
+      newMastery = Math.max(0, newMastery - 1);
+    }
+
+    const daysSinceReview = card.attempts;
+    let nextReview = new Date();
+    nextReview.setDate(nextReview.getDate() + intervals[newMastery]);
+
+    return {
+      mastery: newMastery,
+      attempts: card.attempts + 1,
+      correct: card.correct + (wasCorrect ? 1 : 0),
+      lastReview: Date.now(),
+      nextReview: nextReview.getTime()
+    };
+  }
+
+  static formatNextReview(nextReviewTime) {
+    if (!nextReviewTime) return 'New';
+    const now = new Date();
+    const then = new Date(nextReviewTime);
+    const days = Math.ceil((then - now) / (1000 * 60 * 60 * 24));
+    if (days <= 0) return 'Review now';
+    if (days === 1) return 'Tomorrow';
+    return `In ${days}d`;
+  }
+
+  static getMasteryLabel(mastery) {
+    const labels = ['New', 'Learning', 'Familiar', 'Mastered'];
+    return labels[mastery] || 'New';
+  }
+}
+
+// ============================================
+// UI STATE MANAGEMENT
+// ============================================
+
+let currentMode = 'study'; // or 'mc'
+let activeCat = 'all';
 let deck = [];
 let idx = 0;
 let knew = 0, missed = 0;
 let isFlipped = false;
-let scored = 0; // how many have been scored in current deck
+let scored = 0;
+let searchTerm = '';
 
-function getDeck() {
-  return activeCat === "all" ? [...cards] : cards.filter(c => c.cat === activeCat);
+let deckMC = [];
+let idxMC = 0;
+let knewMC = 0, missedMC = 0;
+let scoredMC = 0;
+let selectedOptionMC = null;
+let searchTermMC = '';
+let activeCatMC = 'all';
+
+// ============================================
+// UTILITIES
+// ============================================
+
+function getDeck(category, searchQuery = '') {
+  const cards = storage.getCards();
+  let filtered = category === 'all' ? [...cards] : cards.filter(c => c.cat === category);
+  
+  if (searchQuery) {
+    const query = searchQuery.toLowerCase();
+    filtered = filtered.filter(c => 
+      c.q.toLowerCase().includes(query) || 
+      c.a.toLowerCase().includes(query)
+    );
+  }
+  
+  return filtered;
 }
 
 function tagClass(cat) {
   return "card-cat-tag tag-" + cat;
 }
 
-function syncHeight() {
-  const front = document.querySelector('.card-face.front');
-  const back = document.querySelector('.card-face.back');
-  const scene = document.getElementById('cardScene');
-  const inner = document.getElementById('cardInner');
-  // measure front face natural height
+function syncHeight(sceneId, innerId, backId) {
+  const scene = document.getElementById(sceneId);
+  const inner = document.getElementById(innerId);
+  const front = scene.querySelector('.card-face.front');
+  const back = scene.querySelector('.card-face.back');
+  
   const frontHeight = front.offsetHeight;
   const backHeight = back.offsetHeight;
-  // use the greater height to accommodate both faces
   const maxHeight = Math.max(frontHeight, backHeight);
+  
   scene.style.height = maxHeight + 'px';
   inner.style.height = maxHeight + 'px';
-  // also size the back face to match
   back.style.height = maxHeight + 'px';
 }
 
-function render() {
+// ============================================
+// STUDY MODE
+// ============================================
+
+function renderStudy() {
   const c = deck[idx];
+  if (!c) return;
+  
   document.getElementById("questionText").textContent = c.q;
   document.getElementById("answerText").textContent = c.a;
   document.getElementById("detailText").textContent = c.detail;
@@ -679,6 +1328,10 @@ function render() {
   document.getElementById("frontTag").textContent = label;
   document.getElementById("backTag").className = tagClass(c.cat);
   document.getElementById("backTag").textContent = label;
+  
+  const metaText = `${c.attempts}x · ${SpacedRepetition.getMasteryLabel(c.mastery)}`;
+  document.getElementById("frontMeta").textContent = metaText;
+  
   document.getElementById("progressLabel").textContent = `Card ${idx+1} of ${deck.length}`;
   document.getElementById("progressFill").style.width = ((idx+1)/deck.length*100).toFixed(1) + "%";
   document.getElementById("cardInner").classList.remove("flipped");
@@ -687,8 +1340,7 @@ function render() {
   document.getElementById("nextBtn").disabled = idx === deck.length - 1;
   isFlipped = false;
   updateScoreBadges();
-  // defer height sync until DOM has painted
-  requestAnimationFrame(syncHeight);
+  requestAnimationFrame(() => syncHeight('cardScene', 'cardInner'));
 }
 
 function updateScoreBadges() {
@@ -706,34 +1358,42 @@ function flip() {
 }
 
 function next() {
-  if (idx < deck.length - 1) { idx++; render(); }
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
 }
 
 function prev() {
-  if (idx > 0) { idx--; render(); }
+  if (idx > 0) { idx--; renderStudy(); }
 }
 
 function markKnew() {
+  const card = deck[idx];
+  const updates = SpacedRepetition.updateMastery(card, true);
+  storage.updateCardMetadata(card.id, updates);
+  
   knew++;
   scored++;
   if (scored >= deck.length) { showResults(); return; }
-  if (idx < deck.length - 1) { idx++; render(); }
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
 }
 
 function markMissed() {
+  const card = deck[idx];
+  const updates = SpacedRepetition.updateMastery(card, false);
+  storage.updateCardMetadata(card.id, updates);
+  
   missed++;
   scored++;
   if (scored >= deck.length) { showResults(); return; }
-  if (idx < deck.length - 1) { idx++; render(); }
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
 }
 
-function shuffle() {
+function shuffleStudy() {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
   }
   idx = 0; knew = 0; missed = 0; scored = 0;
-  render();
+  renderStudy();
 }
 
 function showResults() {
@@ -745,51 +1405,424 @@ function showResults() {
   document.getElementById("resultsSub").textContent = `You scored ${pct}% on ${deck.length} cards`;
   document.getElementById("knewNum").textContent = knew;
   document.getElementById("missedNum").textContent = missed;
+  
+  // Update stats
+  const stats = storage.getStats();
+  stats.totalReviewed += deck.length;
+  stats.totalCorrect += knew;
+  stats.accuracy = Math.round((stats.totalCorrect / stats.totalReviewed) * 100);
+  stats.lastStudy = Date.now();
+  storage.updateStats(stats);
 }
 
-function restart() {
+function restartStudy() {
   knew = 0; missed = 0; idx = 0; scored = 0;
-  deck = getDeck();
+  deck = getDeck(activeCat, searchTerm);
   document.getElementById("resultsScreen").classList.remove("visible");
   document.getElementById("cardSection").style.display = "block";
-  render();
+  renderStudy();
 }
 
-// Build category buttons
-const catRow = document.getElementById("catRow");
-const cats = ["all", "aliphatic", "aromatic", "grignard", "test"];
-cats.forEach(cat => {
-  const count = cat === "all" ? cards.length : cards.filter(c => c.cat === cat).length;
-  const btn = document.createElement("button");
-  btn.className = "cat-btn" + (cat === activeCat ? " active-" + cat : "");
-  btn.textContent = `${CAT_LABELS[cat]} (${count})`;
-  btn.onclick = () => {
-    document.querySelectorAll(".cat-btn").forEach(b => b.className = "cat-btn");
-    btn.className = "cat-btn active-" + cat;
-    activeCat = cat;
+// ============================================
+// MC MODE
+// ============================================
+
+function generateMCOptions(correctAnswer, allCards) {
+  const options = [correctAnswer];
+  const candidates = allCards.filter(c => c.a !== correctAnswer).map(c => c.a);
+  
+  while (options.length < 4 && candidates.length > 0) {
+    const idx = Math.floor(Math.random() * candidates.length);
+    options.push(candidates.splice(idx, 1)[0]);
+  }
+  
+  return options.sort(() => Math.random() - 0.5);
+}
+
+function renderMC() {
+  const c = deckMC[idxMC];
+  if (!c) return;
+  
+  document.getElementById("questionTextMC").textContent = c.q;
+  const label = CAT_LABELS[c.cat] || c.cat;
+  document.getElementById("frontTagMC").className = tagClass(c.cat);
+  document.getElementById("frontTagMC").textContent = label;
+  
+  const allCards = storage.getCards();
+  const options = generateMCOptions(c.a, allCards);
+  const optionsContainer = document.getElementById("mcOptions");
+  optionsContainer.innerHTML = '';
+  
+  options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-option';
+    btn.textContent = String.fromCharCode(65 + i) + '. ' + opt;
+    btn.onclick = () => selectMCOption(opt);
+    optionsContainer.appendChild(btn);
+  });
+  
+  document.getElementById("progressLabelMC").textContent = `Card ${idxMC+1} of ${deckMC.length}`;
+  document.getElementById("progressFillMC").style.width = ((idxMC+1)/deckMC.length*100).toFixed(1) + "%";
+  document.getElementById("scoreRowMC").style.display = "none";
+  document.getElementById("prevBtnMC").disabled = idxMC === 0;
+  document.getElementById("nextBtnMC").disabled = idxMC === deckMC.length - 1;
+  selectedOptionMC = null;
+  updateScoreBadgesMC();
+}
+
+function updateScoreBadgesMC() {
+  const kb = document.getElementById("knewBadgeMC");
+  const mb = document.getElementById("missedBadgeMC");
+  if (knewMC + missedMC === 0) { kb.style.display = "none"; mb.style.display = "none"; return; }
+  kb.style.display = "inline"; kb.textContent = `✓ ${knewMC}`;
+  mb.style.display = "inline"; mb.textContent = `✗ ${missedMC}`;
+}
+
+function selectMCOption(answer) {
+  selectedOptionMC = answer;
+  const options = document.querySelectorAll('.mc-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  event.target.classList.add('selected');
+  document.getElementById("scoreRowMC").style.display = "flex";
+}
+
+function nextMC() {
+  if (idxMC < deckMC.length - 1) { idxMC++; renderMC(); }
+}
+
+function prevMC() {
+  if (idxMC > 0) { idxMC--; renderMC(); }
+}
+
+function markKnewMC() {
+  const card = deckMC[idxMC];
+  const isCorrect = selectedOptionMC === card.a;
+  
+  const updates = SpacedRepetition.updateMastery(card, isCorrect);
+  storage.updateCardMetadata(card.id, updates);
+  
+  if (isCorrect) {
+    knewMC++;
+  } else {
+    missedMC++;
+  }
+  scoredMC++;
+  
+  if (scoredMC >= deckMC.length) { showResultsMC(); return; }
+  if (idxMC < deckMC.length - 1) { idxMC++; renderMC(); }
+}
+
+function markMissedMC() {
+  const card = deckMC[idxMC];
+  const isCorrect = selectedOptionMC === card.a;
+  
+  const updates = SpacedRepetition.updateMastery(card, isCorrect);
+  storage.updateCardMetadata(card.id, updates);
+  
+  if (isCorrect) {
+    knewMC++;
+  } else {
+    missedMC++;
+  }
+  scoredMC++;
+  
+  if (scoredMC >= deckMC.length) { showResultsMC(); return; }
+  if (idxMC < deckMC.length - 1) { idxMC++; renderMC(); }
+}
+
+function shuffleMC() {
+  for (let i = deckMC.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deckMC[i], deckMC[j]] = [deckMC[j], deckMC[i]];
+  }
+  idxMC = 0; knewMC = 0; missedMC = 0; scoredMC = 0;
+  renderMC();
+}
+
+function showResultsMC() {
+  document.getElementById("cardSectionMC").style.display = "none";
+  const rs = document.getElementById("resultsScreenMC");
+  rs.classList.add("visible");
+  const pct = Math.round(knewMC / deckMC.length * 100);
+  document.getElementById("resultsTitleMC").textContent = pct >= 80 ? "Excellent work!" : pct >= 50 ? "Good effort!" : "Keep practising!";
+  document.getElementById("resultsSubMC").textContent = `You scored ${pct}% on ${deckMC.length} cards`;
+  document.getElementById("knewNumMC").textContent = knewMC;
+  document.getElementById("missedNumMC").textContent = missedMC;
+  
+  // Update stats
+  const stats = storage.getStats();
+  stats.totalReviewed += deckMC.length;
+  stats.totalCorrect += knewMC;
+  stats.accuracy = Math.round((stats.totalCorrect / stats.totalReviewed) * 100);
+  stats.lastStudy = Date.now();
+  storage.updateStats(stats);
+}
+
+function restartMC() {
+  knewMC = 0; missedMC = 0; idxMC = 0; scoredMC = 0;
+  deckMC = getDeck(activeCatMC, searchTermMC);
+  document.getElementById("resultsScreenMC").classList.remove("visible");
+  document.getElementById("cardSectionMC").style.display = "block";
+  renderMC();
+}
+
+// ============================================
+// STATISTICS VIEW
+// ============================================
+
+function renderStats() {
+  const cards = storage.getCards();
+  const stats = storage.getStats();
+  
+  document.getElementById("totalStudied").textContent = stats.totalReviewed;
+  document.getElementById("accuracyPct").textContent = stats.accuracy + '%';
+  document.getElementById("streakDays").textContent = stats.studyStreak;
+  
+  // Mastery breakdown
+  const masteryBreakdown = { 0: 0, 1: 0, 2: 0, 3: 0 };
+  cards.forEach(c => {
+    masteryBreakdown[c.mastery]++;
+  });
+  
+  document.getElementById("masteryNew").textContent = masteryBreakdown[0];
+  document.getElementById("masteryLearning").textContent = masteryBreakdown[1];
+  document.getElementById("masteryFamiliar").textContent = masteryBreakdown[2];
+  document.getElementById("masteryMastered").textContent = masteryBreakdown[3];
+  
+  // Category breakdown
+  const catBreakdown = { aliphatic: 0, aromatic: 0, grignard: 0, test: 0 };
+  cards.forEach(c => {
+    if (catBreakdown.hasOwnProperty(c.cat)) {
+      catBreakdown[c.cat]++;
+    }
+  });
+  
+  document.getElementById("catAliphatic").textContent = catBreakdown.aliphatic;
+  document.getElementById("catAromatic").textContent = catBreakdown.aromatic;
+  document.getElementById("catGrignard").textContent = catBreakdown.grignard;
+  document.getElementById("catTest").textContent = catBreakdown.test;
+}
+
+// ============================================
+// SETTINGS VIEW
+// ============================================
+
+function exportData() {
+  const data = storage.exportData();
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `chemistry-flashcards-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData() {
+  const textarea = document.getElementById("importTextarea");
+  const json = textarea.value.trim();
+  
+  if (!json) {
+    alert('Please paste JSON data');
+    return;
+  }
+  
+  if (storage.importData(json)) {
+    alert('✓ Deck imported successfully');
+    textarea.value = '';
+  } else {
+    alert('✗ Invalid JSON format');
+  }
+}
+
+function resetData() {
+  if (confirm('This will delete all progress. Are you sure?')) {
+    storage.resetData();
+    alert('✓ Data reset');
+  }
+}
+
+function addCustomCard() {
+  const q = document.getElementById("customQ").value.trim();
+  const a = document.getElementById("customA").value.trim();
+  const detail = document.getElementById("customDetail").value.trim();
+  const cat = document.getElementById("customCat").value;
+  
+  if (!q || !a) {
+    alert('Question and answer are required');
+    return;
+  }
+  
+  const cards = storage.getCards();
+  const newCard = {
+    id: `custom-${Date.now()}`,
+    cat,
+    q,
+    a,
+    detail: detail || 'Custom card',
+    mastery: 0,
+    attempts: 0,
+    correct: 0,
+    lastReview: null,
+    nextReview: null
+  };
+  
+  cards.push(newCard);
+  storage.saveCards(cards);
+  
+  document.getElementById("customQ").value = '';
+  document.getElementById("customA").value = '';
+  document.getElementById("customDetail").value = '';
+  
+  alert('✓ Card added');
+}
+
+// ============================================
+// TAB NAVIGATION
+// ============================================
+
+function initTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const views = document.querySelectorAll('.view');
+  
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabName = btn.getAttribute('data-tab');
+      
+      // Hide all views
+      views.forEach(v => v.classList.remove('active'));
+      
+      // Remove active from all tabs
+      tabBtns.forEach(b => b.classList.remove('active'));
+      
+      // Show selected view
+      document.getElementById(tabName + 'View').classList.add('active');
+      btn.classList.add('active');
+      
+      // Render view-specific content
+      if (tabName === 'stats') {
+        renderStats();
+      }
+    });
+  });
+}
+
+// ============================================
+// CATEGORY BUTTONS
+// ============================================
+
+function initCategories() {
+  const catRow = document.getElementById("catRow");
+  const catRowMC = document.getElementById("catRowMC");
+  const cats = ["all", "aliphatic", "aromatic", "grignard", "test"];
+  
+  // Study mode categories
+  cats.forEach(cat => {
+    const count = cat === "all" ? storage.getCards().length : storage.getCards().filter(c => c.cat === cat).length;
+    const btn = document.createElement("button");
+    btn.className = "cat-btn" + (cat === activeCat ? " active-" + cat : "");
+    btn.textContent = `${CAT_LABELS[cat]} (${count})`;
+    btn.onclick = () => {
+      document.querySelectorAll("#catRow .cat-btn").forEach(b => b.className = "cat-btn");
+      btn.className = "cat-btn active-" + cat;
+      activeCat = cat;
+      knew = 0; missed = 0; idx = 0; scored = 0;
+      deck = getDeck(activeCat, searchTerm);
+      document.getElementById("resultsScreen").classList.remove("visible");
+      document.getElementById("cardSection").style.display = "block";
+      renderStudy();
+    };
+    catRow.appendChild(btn);
+  });
+  
+  // MC mode categories
+  cats.forEach(cat => {
+    const count = cat === "all" ? storage.getCards().length : storage.getCards().filter(c => c.cat === cat).length;
+    const btn = document.createElement("button");
+    btn.className = "cat-btn" + (cat === activeCatMC ? " active-" + cat : "");
+    btn.textContent = `${CAT_LABELS[cat]} (${count})`;
+    btn.onclick = () => {
+      document.querySelectorAll("#catRowMC .cat-btn").forEach(b => b.className = "cat-btn");
+      btn.className = "cat-btn active-" + cat;
+      activeCatMC = cat;
+      knewMC = 0; missedMC = 0; idxMC = 0; scoredMC = 0;
+      deckMC = getDeck(activeCatMC, searchTermMC);
+      document.getElementById("resultsScreenMC").classList.remove("visible");
+      document.getElementById("cardSectionMC").style.display = "block";
+      renderMC();
+    };
+    catRowMC.appendChild(btn);
+  });
+}
+
+// ============================================
+// SEARCH
+// ============================================
+
+function initSearch() {
+  const searchInput = document.getElementById("searchInput");
+  const searchInputMC = document.getElementById("searchInputMC");
+  
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value;
     knew = 0; missed = 0; idx = 0; scored = 0;
-    deck = getDeck();
+    deck = getDeck(activeCat, searchTerm);
     document.getElementById("resultsScreen").classList.remove("visible");
     document.getElementById("cardSection").style.display = "block";
-    render();
-  };
-  catRow.appendChild(btn);
+    renderStudy();
+  });
+  
+  searchInputMC.addEventListener('input', (e) => {
+    searchTermMC = e.target.value;
+    knewMC = 0; missedMC = 0; idxMC = 0; scoredMC = 0;
+    deckMC = getDeck(activeCatMC, searchTermMC);
+    document.getElementById("resultsScreenMC").classList.remove("visible");
+    document.getElementById("cardSectionMC").style.display = "block";
+    renderMC();
+  });
+}
+
+// ============================================
+// KEYBOARD SHORTCUTS
+// ============================================
+
+function initKeyboard() {
+  document.addEventListener("keydown", e => {
+    const studyViewActive = document.getElementById("studyView").classList.contains("active");
+    const mcViewActive = document.getElementById("mcView").classList.contains("active");
+    
+    if (studyViewActive) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+      if ((e.key === "k" || e.key === "K") && isFlipped) markKnew();
+      if ((e.key === "m" || e.key === "M") && isFlipped) markMissed();
+    }
+  });
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTabs();
+  initCategories();
+  initSearch();
+  initKeyboard();
+  
+  // Initialize study mode
+  deck = getDeck(activeCat, searchTerm);
+  renderStudy();
+  
+  // Initialize MC mode
+  deckMC = getDeck(activeCatMC, searchTermMC);
+  renderMC();
 });
 
-// Keyboard shortcuts
-document.addEventListener("keydown", e => {
-  if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
-  if (e.key === "ArrowRight") next();
-  if (e.key === "ArrowLeft") prev();
-  if ((e.key === "k" || e.key === "K") && isFlipped) markKnew();
-  if ((e.key === "m" || e.key === "M") && isFlipped) markMissed();
+window.addEventListener("resize", () => {
+  if (!isFlipped) syncHeight('cardScene', 'cardInner');
 });
-
-window.addEventListener("resize", () => { if (!isFlipped) syncHeight(); });
-
-// Init
-deck = getDeck();
-render();
 </script>
 </body>
 </html>
