@@ -202,8 +202,13 @@
 
   .unit-card.full-width:hover .study-btn {
     background: var(--accent);
-    color: white;
+    color: white !important;
     border-color: var(--accent);
+  }
+
+  .btn-reactions {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   /* Unit Colors */
@@ -349,7 +354,7 @@ function renderHome() {
       </div>
     </div>
     
-    <div class="study-btn" style="border-color: var(--accent); color: var(--accent);">→ Study Reactions</div>
+    <div class="study-btn btn-reactions">→ Study Reactions</div>
   `;
   grid.appendChild(rxnCard);
   
