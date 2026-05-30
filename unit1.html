@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Organic Chemistry Flashcards</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2eb;
+    --surface: #fffef9;
+    --border: #d9d4c7;
+    --text: #1a1814;
+    --muted: #7a7568;
+    --accent: #c84b2f;
+    --accent-light: #f5e8e4;
+    --green: #2d6a4f;
+    --green-light: #e6f0eb;
+    --purple: #4a3880;
+    --purple-light: #eeeaf7;
+    --amber: #8a5c1a;
+    --amber-light: #f5ecd8;
+    --blue: #1a4d78;
+    --blue-light: #e3eef7;
+    --rose: #8a1a3b;
+    --rose-light: #f5e4ea;
+    --teal: #1a7868;
+    --teal-light: #e3f2ef;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  header {
+    padding: 3rem 2rem 1.5rem;
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-back {
+    margin-bottom: 2rem;
+  }
+
+  .nav-back a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    transition: all 0.15s ease;
+  }
+
+  .nav-back a:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+
+  /* Tab Navigation */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    max-width: 780px;
+    margin: 2.5rem auto 0;
+    padding: 0 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  .main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* View container */
+  .view {
+    display: none;
+  }
+
+  .view.active {
+    display: block;
+  }
+
+  .search-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--text);
+    background: white;
+  }
+
+  .search-input::placeholder {
+    color: var(--muted);
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .score-badges {
+    display: flex;
+    gap: 8px;
+  }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+
+  .badge-knew { background: var(--green-light); color: var(--green); }
+  .badge-missed { background: #fce8e4; color: var(--accent); }
+
+  .progress-bar-bg {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  /* Card flip */
+  .card-scene {
+    perspective: 1200px;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    user-select: none;
+    min-height: 200px;
+  }
+
+  .card-inner {
+    width: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+
+  .card-inner.flipped { transform: rotateY(180deg); }
+
+  .card-inner.flipped .card-face.front {
+    display: none;
+  }
+
+  .card-face {
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    min-height: 200px;
+    box-sizing: border-box;
+  }
+
+  .card-face.front {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-face.back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    background: var(--text);
+    border-color: var(--text);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .card-face.front::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .card-cat-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .tag-all    { background: #e8e4de; color: var(--muted); }
+  .tag-unit1  { background: var(--green-light); color: var(--green); }
+  .tag-unit2  { background: var(--purple-light); color: var(--purple); }
+  .tag-unit3  { background: var(--amber-light); color: var(--amber); }
+  .tag-unit4  { background: var(--blue-light); color: var(--blue); }
+  .tag-unit5  { background: var(--rose-light); color: var(--rose); }
+  .tag-unit6  { background: var(--teal-light); color: var(--teal); }
+
+  .card-metadata {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.06em;
+  }
+
+  .card-q {
+    font-size: clamp(15px, 2.5vw, 18px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+  }
+
+  .card-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--border);
+    margin: 0;
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-a {
+    font-size: clamp(14px, 2.2vw, 16px);
+    font-weight: 400;
+    color: #f5f2eb;
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .card-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #9a9488;
+    line-height: 1.5;
+    max-width: 540px;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn:hover:not(:disabled) { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn:disabled { opacity: 0.25; cursor: default; }
+  .btn-shuffle { margin-left: auto; }
+
+  /* Multiple Choice */
+  .mc-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+
+  .mc-option {
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: all 0.15s ease;
+  }
+
+  .mc-option:hover { border-color: var(--text); background: #faf9f6; }
+
+  .mc-option.selected { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .mc-option.correct { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
+  .mc-option.incorrect { background: #fce8e4; color: var(--accent); border-color: var(--accent); }
+
+  /* Score row */
+  .score-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.25s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-knew {
+    background: var(--green-light);
+    color: var(--green);
+    border-color: #b5d4c3;
+    flex: 1;
+    max-width: 200px;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .btn-knew:hover { background: var(--green); color: #fff; border-color: var(--green); }
+
+  .btn-missed {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: #e8c4bc;
+    flex: 1;
+    max-width: 200px;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .btn-missed:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .key-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--border);
+    text-align: center;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Results screen */
+  .results {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    display: none;
+  }
+
+  .results.visible { display: block; }
+
+  .results-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .results-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 2rem;
+  }
+
+  .results-grid {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .results-stat {
+    padding: 1.2rem 2rem;
+    border-radius: var(--radius);
+    min-width: 110px;
+  }
+
+  .results-stat .num {
+    font-family: 'DM Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 300;
+    display: block;
+  }
+
+  .results-stat .lbl {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stat-knew   { background: var(--green-light); color: var(--green); }
+  .stat-missed { background: var(--accent-light); color: var(--accent); }
+
+  .btn-restart {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 12px 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--text);
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-restart:hover { background: transparent; color: var(--text); }
+
+  /* Statistics View */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stat-card .big-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-card .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .mastery-breakdown {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .mastery-breakdown h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .mastery-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .mastery-item:last-child { border-bottom: none; }
+
+  .mastery-label {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+  }
+
+  .mastery-count {
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Settings View */
+  .settings-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-section h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .settings-group {
+    margin-bottom: 1rem;
+  }
+
+  .settings-group:last-child { margin-bottom: 0; }
+
+  .settings-label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .settings-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .btn-small {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  .btn-small:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .btn-danger {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-danger:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    resize: vertical;
+    margin-bottom: 0.75rem;
+  }
+
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--text);
+    background: #fafaf8;
+  }
+
+  textarea::placeholder, input[type="text"]::placeholder {
+    color: var(--muted);
+  }
+
+  .data-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid #b5d4c3;
+    margin-bottom: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    max-width: 780px;
+    margin: 4rem auto 0;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .social-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    transition: all 0.15s ease;
+  }
+
+  .social-links a:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  @media (max-width: 540px) {
+    header { padding: 2rem 1.2rem 1rem; }
+    .main { padding: 0 1.2rem 3rem; }
+    .controls { flex-wrap: wrap; }
+    .btn-shuffle { margin-left: 0; }
+    .card-face { padding: 1.8rem 1.2rem; }
+    footer { padding: 1.5rem 1.2rem; }
+    .social-links { flex-wrap: wrap; gap: 0.8rem; }
+    .tabs-nav { padding: 0 1.2rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-back">
+    <a href="index.html">← Home</a>
+  </div>
+  <p class="logo">A-Level Chemistry</p>
+  <h1 id="unitTitle">Unit 1</h1>
+  <p class="subtitle" id="unitSubtitle">Structure, Bonding and Introduction to Organic Chemistry</p>
+</header>
+
+<!-- Navigation Tabs -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="study">Study</button>
+  <button class="tab-btn" data-tab="mc">MC Mode</button>
+  <button class="tab-btn" data-tab="stats">Stats</button>
+  <button class="tab-btn" data-tab="settings">⚙ Settings</button>
+</nav>
+
+<div class="main">
+
+  <!-- STUDY VIEW -->
+  <div class="view active" id="studyView">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search Unit 1 cards...">
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabel">Card 1 of 0</span>
+      <div class="score-badges">
+        <span class="badge badge-knew" id="knewBadge" style="display:none"></span>
+        <span class="badge badge-missed" id="missedBadge" style="display:none"></span>
+      </div>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div id="cardSection">
+      <div class="card-scene" id="cardScene" onclick="flip()" title="Click to flip">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face front">
+            <span class="card-cat-tag" id="frontTag"></span>
+            <span class="card-metadata" id="frontMeta"></span>
+            <p class="card-q" id="questionText"></p>
+            <p class="card-hint">click to reveal answer</p>
+          </div>
+          <div class="card-face back">
+            <span class="card-cat-tag" id="backTag"></span>
+            <p class="card-a" id="answerText"></p>
+            <p class="card-detail" id="detailText"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prev()">← prev</button>
+        <button class="btn" id="nextBtn" onclick="next()">next →</button>
+        <button class="btn btn-shuffle" onclick="shuffleStudy()">shuffle</button>
+      </div>
+
+      <div class="score-row" id="scoreRow" style="display:none">
+        <button class="btn btn-knew" onclick="markKnew()">✓ knew it</button>
+        <button class="btn btn-missed" onclick="markMissed()">✗ missed it</button>
+      </div>
+
+      <p class="key-hint">space = flip &nbsp;·&nbsp; ← → = navigate &nbsp;·&nbsp; k = knew &nbsp;·&nbsp; m = missed</p>
+    </div>
+
+    <div class="results" id="resultsScreen">
+      <p class="results-title" id="resultsTitle">Done!</p>
+      <p class="results-sub" id="resultsSub"></p>
+      <div class="results-grid">
+        <div class="results-stat stat-knew">
+          <span class="num" id="knewNum">0</span>
+          <span class="lbl">knew it</span>
+        </div>
+        <div class="results-stat stat-missed">
+          <span class="num" id="missedNum">0</span>
+          <span class="lbl">missed it</span>
+        </div>
+      </div>
+      <button class="btn-restart" onclick="restartStudy()">go again</button>
+    </div>
+  </div>
+
+  <!-- MC MODE VIEW -->
+  <div class="view" id="mcView">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInputMC" placeholder="Search Unit 1 cards...">
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabelMC">Card 1 of 0</span>
+      <div class="score-badges">
+        <span class="badge badge-knew" id="knewBadgeMC" style="display:none"></span>
+        <span class="badge badge-missed" id="missedBadgeMC" style="display:none"></span>
+      </div>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFillMC" style="width:0%"></div>
+    </div>
+
+    <div id="cardSectionMC">
+      <div class="card-scene" id="cardSceneMC" style="cursor: default;">
+        <div class="card-inner" id="cardInnerMC">
+          <div class="card-face front">
+            <span class="card-cat-tag" id="frontTagMC"></span>
+            <p class="card-q" id="questionTextMC"></p>
+            <div class="mc-options" id="mcOptions"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtnMC" onclick="prevMC()">← prev</button>
+        <button class="btn" id="nextBtnMC" onclick="nextMC()">next →</button>
+        <button class="btn btn-shuffle" onclick="shuffleMC()">shuffle</button>
+      </div>
+
+      <div class="score-row" id="scoreRowMC" style="display:none">
+        <button class="btn btn-knew" onclick="markKnewMC()">✓ correct</button>
+        <button class="btn btn-missed" onclick="markMissedMC()">✗ incorrect</button>
+      </div>
+    </div>
+
+    <div class="results" id="resultsScreenMC">
+      <p class="results-title" id="resultsTitleMC">Done!</p>
+      <p class="results-sub" id="resultsSubMC"></p>
+      <div class="results-grid">
+        <div class="results-stat stat-knew">
+          <span class="num" id="knewNumMC">0</span>
+          <span class="lbl">correct</span>
+        </div>
+        <div class="results-stat stat-missed">
+          <span class="num" id="missedNumMC">0</span>
+          <span class="lbl">incorrect</span>
+        </div>
+      </div>
+      <button class="btn-restart" onclick="restartMC()">go again</button>
+    </div>
+  </div>
+
+  <!-- STATISTICS VIEW -->
+  <div class="view" id="statsView">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="big-num" id="totalStudied">0</span>
+        <span class="label">cards studied</span>
+      </div>
+      <div class="stat-card">
+        <span class="big-num" id="accuracyPct">0%</span>
+        <span class="label">accuracy</span>
+      </div>
+    </div>
+
+    <div class="mastery-breakdown">
+      <h3>mastery breakdown</h3>
+      <div class="mastery-item">
+        <span class="mastery-label">🆕 New</span>
+        <span class="mastery-count" id="masteryNew">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">📚 Learning</span>
+        <span class="mastery-count" id="masteryLearning">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">🎯 Familiar</span>
+        <span class="mastery-count" id="masteryFamiliar">0</span>
+      </div>
+      <div class="mastery-item">
+        <span class="mastery-label">⭐ Mastered</span>
+        <span class="mastery-count" id="masteryMastered">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div class="view" id="settingsView">
+    <div class="settings-section">
+      <h3>data & backup</h3>
+      <div class="settings-group">
+        <p class="data-status" id="dataStatus">✓ Data saved to browser</p>
+        <button class="btn-small" onclick="exportData()">export JSON</button>
+        <button class="btn-small" onclick="resetData()" style="border-color: var(--accent); color: var(--accent);">reset all data</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>import deck</h3>
+      <div class="settings-group">
+        <label class="settings-label">paste JSON deck below</label>
+        <p class="settings-desc">Paste a previously exported deck to restore or merge cards</p>
+        <textarea id="importTextarea" placeholder='Paste JSON export here...' rows="6"></textarea>
+        <button class="btn-small" onclick="importData()">import deck</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>add custom card</h3>
+      <div class="settings-group">
+        <label class="settings-label">question</label>
+        <input type="text" id="customQ" placeholder="What is the reaction...">
+      </div>
+      <div class="settings-group">
+        <label class="settings-label">answer</label>
+        <input type="text" id="customA" placeholder="Reagents and conditions...">
+      </div>
+      <div class="settings-group">
+        <label class="settings-label">details (optional)</label>
+        <input type="text" id="customDetail" placeholder="Mechanism or additional notes...">
+      </div>
+      <button class="btn-small" onclick="addCustomCard()">add card</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-text">Created for A-Level Chemistry revision</p>
+  <div class="social-links">
+    <a href="https://github.com/saucynandhu" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://instagram.com/nandhu_sauce" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</footer>
+
+<script src="cards.js"></script>
+<script src="shared.js"></script>
+<script>
+// ============================================
+// UI STATE MANAGEMENT
+// ============================================
+
+const UNIT_KEY = 'unit1';
+let deck = [];
+let idx = 0;
+let knew = 0, missed = 0;
+let isFlipped = false;
+let scored = 0;
+let searchTerm = '';
+
+let deckMC = [];
+let idxMC = 0;
+let knewMC = 0, missedMC = 0;
+let scoredMC = 0;
+let selectedOptionMC = null;
+let searchTermMC = '';
+
+// ============================================
+// STUDY MODE
+// ============================================
+
+function renderStudy() {
+  const c = deck[idx];
+  if (!c) {
+    document.getElementById("progressLabel").textContent = "No cards found";
+    return;
+  }
+  
+  document.getElementById("questionText").textContent = c.q;
+  document.getElementById("answerText").textContent = c.a;
+  document.getElementById("detailText").textContent = c.detail;
+  const label = CAT_LABELS[c.cat] || c.cat;
+  document.getElementById("frontTag").className = tagClass(c.cat);
+  document.getElementById("frontTag").textContent = label;
+  document.getElementById("backTag").className = tagClass(c.cat);
+  document.getElementById("backTag").textContent = label;
+  
+  const metaText = `${c.attempts}x · ${SpacedRepetition.getMasteryLabel(c.mastery)}`;
+  document.getElementById("frontMeta").textContent = metaText;
+  
+  document.getElementById("progressLabel").textContent = `Card ${idx+1} of ${deck.length}`;
+  document.getElementById("progressFill").style.width = ((idx+1)/deck.length*100).toFixed(1) + "%";
+  document.getElementById("cardInner").classList.remove("flipped");
+  document.getElementById("scoreRow").style.display = "none";
+  document.getElementById("prevBtn").disabled = idx === 0;
+  document.getElementById("nextBtn").disabled = idx === deck.length - 1;
+  isFlipped = false;
+  updateScoreBadges();
+  requestAnimationFrame(() => syncHeight('cardScene', 'cardInner'));
+}
+
+function updateScoreBadges() {
+  const kb = document.getElementById("knewBadge");
+  const mb = document.getElementById("missedBadge");
+  if (knew + missed === 0) { kb.style.display = "none"; mb.style.display = "none"; return; }
+  kb.style.display = "inline"; kb.textContent = `✓ ${knew}`;
+  mb.style.display = "inline"; mb.textContent = `✗ ${missed}`;
+}
+
+function flip() {
+  if (!deck.length) return;
+  isFlipped = !isFlipped;
+  document.getElementById("cardInner").classList.toggle("flipped", isFlipped);
+  document.getElementById("scoreRow").style.display = isFlipped ? "flex" : "none";
+}
+
+function next() {
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
+}
+
+function prev() {
+  if (idx > 0) { idx--; renderStudy(); }
+}
+
+function markKnew() {
+  const card = deck[idx];
+  const updates = SpacedRepetition.updateMastery(card, true);
+  storage.updateCardMetadata(card.id, updates);
+  
+  knew++;
+  scored++;
+  if (scored >= deck.length) { showResults(); return; }
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
+}
+
+function markMissed() {
+  const card = deck[idx];
+  const updates = SpacedRepetition.updateMastery(card, false);
+  storage.updateCardMetadata(card.id, updates);
+  
+  missed++;
+  scored++;
+  if (scored >= deck.length) { showResults(); return; }
+  if (idx < deck.length - 1) { idx++; renderStudy(); }
+}
+
+function shuffleStudy() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  idx = 0; knew = 0; missed = 0; scored = 0;
+  renderStudy();
+}
+
+function showResults() {
+  document.getElementById("cardSection").style.display = "none";
+  const rs = document.getElementById("resultsScreen");
+  rs.classList.add("visible");
+  const pct = Math.round(knew / deck.length * 100);
+  document.getElementById("resultsTitle").textContent = pct >= 80 ? "Excellent work!" : pct >= 50 ? "Good effort!" : "Keep practising!";
+  document.getElementById("resultsSub").textContent = `You scored ${pct}% on ${deck.length} cards`;
+  document.getElementById("knewNum").textContent = knew;
+  document.getElementById("missedNum").textContent = missed;
+  
+  // Update unit stats
+  const stats = storage.getStats(UNIT_KEY);
+  stats.totalReviewed += deck.length;
+  stats.totalCorrect += knew;
+  stats.accuracy = Math.round((stats.totalCorrect / stats.totalReviewed) * 100);
+  stats.lastStudy = Date.now();
+  storage.updateStats(UNIT_KEY, stats);
+
+  // Update global stats too
+  const globalStats = storage.getStats('global');
+  globalStats.totalReviewed += deck.length;
+  globalStats.totalCorrect += knew;
+  globalStats.accuracy = Math.round((globalStats.totalCorrect / globalStats.totalReviewed) * 100);
+  globalStats.lastStudy = Date.now();
+  storage.updateStats('global', globalStats);
+}
+
+function restartStudy() {
+  knew = 0; missed = 0; idx = 0; scored = 0;
+  deck = getDeck(UNIT_KEY, searchTerm);
+  document.getElementById("resultsScreen").classList.remove("visible");
+  document.getElementById("cardSection").style.display = "block";
+  renderStudy();
+}
+
+// ============================================
+// MC MODE
+// ============================================
+
+function generateMCOptions(correctAnswer, allCards) {
+  const options = [correctAnswer];
+  const candidates = allCards.filter(c => c.a !== correctAnswer).map(c => c.a);
+  
+  while (options.length < 4 && candidates.length > 0) {
+    const idx = Math.floor(Math.random() * candidates.length);
+    options.push(candidates.splice(idx, 1)[0]);
+  }
+  
+  return options.sort(() => Math.random() - 0.5);
+}
+
+function renderMC() {
+  const c = deckMC[idxMC];
+  if (!c) {
+    document.getElementById("progressLabelMC").textContent = "No cards found";
+    return;
+  }
+  
+  document.getElementById("questionTextMC").textContent = c.q;
+  const label = CAT_LABELS[c.cat] || c.cat;
+  document.getElementById("frontTagMC").className = tagClass(c.cat);
+  document.getElementById("frontTagMC").textContent = label;
+  
+  const allCards = storage.getCards();
+  const options = generateMCOptions(c.a, allCards);
+  const optionsContainer = document.getElementById("mcOptions");
+  optionsContainer.innerHTML = '';
+  
+  options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-option';
+    btn.textContent = String.fromCharCode(65 + i) + '. ' + opt;
+    btn.onclick = () => selectMCOption(opt);
+    optionsContainer.appendChild(btn);
+  });
+  
+  document.getElementById("progressLabelMC").textContent = `Card ${idxMC+1} of ${deckMC.length}`;
+  document.getElementById("progressFillMC").style.width = ((idxMC+1)/deckMC.length*100).toFixed(1) + "%";
+  document.getElementById("scoreRowMC").style.display = "none";
+  document.getElementById("prevBtnMC").disabled = idxMC === 0;
+  document.getElementById("nextBtnMC").disabled = idxMC === deckMC.length - 1;
+  selectedOptionMC = null;
+  updateScoreBadgesMC();
+}
+
+function updateScoreBadgesMC() {
+  const kb = document.getElementById("knewBadgeMC");
+  const mb = document.getElementById("missedBadgeMC");
+  if (knewMC + missedMC === 0) { kb.style.display = "none"; mb.style.display = "none"; return; }
+  kb.style.display = "inline"; kb.textContent = `✓ ${knewMC}`;
+  mb.style.display = "inline"; mb.textContent = `✗ ${missedMC}`;
+}
+
+function selectMCOption(answer) {
+  selectedOptionMC = answer;
+  const options = document.querySelectorAll('.mc-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  event.target.classList.add('selected');
+  document.getElementById("scoreRowMC").style.display = "flex";
+}
+
+function nextMC() {
+  if (idxMC < deckMC.length - 1) { idxMC++; renderMC(); }
+}
+
+function prevMC() {
+  if (idxMC > 0) { idxMC--; renderMC(); }
+}
+
+function markKnewMC() {
+  const card = deckMC[idxMC];
+  const isCorrect = selectedOptionMC === card.a;
+  
+  const updates = SpacedRepetition.updateMastery(card, isCorrect);
+  storage.updateCardMetadata(card.id, updates);
+  
+  if (isCorrect) knewMC++; else missedMC++;
+  scoredMC++;
+  
+  if (scoredMC >= deckMC.length) { showResultsMC(); return; }
+  if (idxMC < deckMC.length - 1) { idxMC++; renderMC(); }
+}
+
+function markMissedMC() {
+  markKnewMC(); // Same logic, outcome depends on selectedOptionMC
+}
+
+function shuffleMC() {
+  for (let i = deckMC.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deckMC[i], deckMC[j]] = [deckMC[j], deckMC[i]];
+  }
+  idxMC = 0; knewMC = 0; missedMC = 0; scoredMC = 0;
+  renderMC();
+}
+
+function showResultsMC() {
+  document.getElementById("cardSectionMC").style.display = "none";
+  const rs = document.getElementById("resultsScreenMC");
+  rs.classList.add("visible");
+  const pct = Math.round(knewMC / deckMC.length * 100);
+  document.getElementById("resultsTitleMC").textContent = pct >= 80 ? "Excellent work!" : pct >= 50 ? "Good effort!" : "Keep practising!";
+  document.getElementById("resultsSubMC").textContent = `You scored ${pct}% on ${deckMC.length} cards`;
+  document.getElementById("knewNumMC").textContent = knewMC;
+  document.getElementById("missedNumMC").textContent = missedMC;
+  
+  // Update stats
+  const stats = storage.getStats(UNIT_KEY);
+  stats.totalReviewed += deckMC.length;
+  stats.totalCorrect += knewMC;
+  stats.accuracy = Math.round((stats.totalCorrect / stats.totalReviewed) * 100);
+  stats.lastStudy = Date.now();
+  storage.updateStats(UNIT_KEY, stats);
+}
+
+function restartMC() {
+  knewMC = 0; missedMC = 0; idxMC = 0; scoredMC = 0;
+  deckMC = getDeck(UNIT_KEY, searchTermMC);
+  document.getElementById("resultsScreenMC").classList.remove("visible");
+  document.getElementById("cardSectionMC").style.display = "block";
+  renderMC();
+}
+
+// ============================================
+// STATISTICS VIEW
+// ============================================
+
+function renderStats() {
+  const cards = storage.getCards().filter(c => c.cat === UNIT_KEY);
+  const stats = storage.getStats(UNIT_KEY);
+  
+  document.getElementById("totalStudied").textContent = stats.totalReviewed;
+  document.getElementById("accuracyPct").textContent = (stats.accuracy || 0) + '%';
+  
+  // Mastery breakdown
+  const masteryBreakdown = { 0: 0, 1: 0, 2: 0, 3: 0 };
+  cards.forEach(c => {
+    masteryBreakdown[c.mastery]++;
+  });
+  
+  document.getElementById("masteryNew").textContent = masteryBreakdown[0];
+  document.getElementById("masteryLearning").textContent = masteryBreakdown[1];
+  document.getElementById("masteryFamiliar").textContent = masteryBreakdown[2];
+  document.getElementById("masteryMastered").textContent = masteryBreakdown[3];
+}
+
+// ============================================
+// SETTINGS VIEW
+// ============================================
+
+function exportData() {
+  const data = storage.exportData();
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `chemistry-flashcards-unit1-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData() {
+  const textarea = document.getElementById("importTextarea");
+  const json = textarea.value.trim();
+  if (!json) return;
+  if (storage.importData(json)) {
+    alert('✓ Data imported');
+    location.reload();
+  } else {
+    alert('✗ Invalid format');
+  }
+}
+
+function resetData() {
+  if (confirm('Delete all progress?')) {
+    storage.resetData();
+    location.reload();
+  }
+}
+
+function addCustomCard() {
+  const q = document.getElementById("customQ").value.trim();
+  const a = document.getElementById("customA").value.trim();
+  const detail = document.getElementById("customDetail").value.trim();
+  if (!q || !a) return;
+  
+  const cards = storage.getCards();
+  cards.push({
+    id: `custom-${Date.now()}`,
+    cat: UNIT_KEY,
+    q, a, detail: detail || 'Custom card',
+    mastery: 0, attempts: 0, correct: 0, lastReview: null, nextReview: null
+  });
+  storage.saveCards(cards);
+  location.reload();
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+function initTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const views = document.querySelectorAll('.view');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabName = btn.getAttribute('data-tab');
+      views.forEach(v => v.classList.remove('active'));
+      tabBtns.forEach(b => b.classList.remove('active'));
+      document.getElementById(tabName + 'View').classList.add('active');
+      btn.classList.add('active');
+      if (tabName === 'stats') renderStats();
+    });
+  });
+}
+
+function initSearch() {
+  document.getElementById("searchInput").addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    idx = 0; scored = 0; knew = 0; missed = 0;
+    deck = getDeck(UNIT_KEY, searchTerm);
+    renderStudy();
+  });
+  document.getElementById("searchInputMC").addEventListener('input', (e) => {
+    searchTermMC = e.target.value;
+    idxMC = 0; scoredMC = 0; knewMC = 0; missedMC = 0;
+    deckMC = getDeck(UNIT_KEY, searchTermMC);
+    renderMC();
+  });
+}
+
+function initKeyboard() {
+  document.addEventListener("keydown", e => {
+    const studyActive = document.getElementById("studyView").classList.contains("active");
+    if (studyActive) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+      if ((e.key === "k" || e.key === "K") && isFlipped) markKnew();
+      if ((e.key === "m" || e.key === "M") && isFlipped) markMissed();
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTabs();
+  initSearch();
+  initKeyboard();
+  deck = getDeck(UNIT_KEY);
+  deckMC = getDeck(UNIT_KEY);
+  renderStudy();
+  renderMC();
+});
+
+window.addEventListener("resize", () => {
+  if (!isFlipped) syncHeight('cardScene', 'cardInner');
+});
+</script>
+</body>
+</html>

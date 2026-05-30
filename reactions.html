@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactions Reference — Organic & Inorganic</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2eb;
+    --surface: #fffef9;
+    --border: #d9d4c7;
+    --text: #1a1814;
+    --muted: #7a7568;
+    --accent: #c84b2f;
+    --accent-light: #f5e8e4;
+    --green: #2d6a4f;
+    --green-light: #e6f0eb;
+    --purple: #4a3880;
+    --purple-light: #eeeaf7;
+    --amber: #8a5c1a;
+    --amber-light: #f5ecd8;
+    --blue: #1a4d78;
+    --blue-light: #e3eef7;
+    --rose: #8a1a3b;
+    --rose-light: #f5e4ea;
+    --teal: #1a7868;
+    --teal-light: #e3f2ef;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  header {
+    padding: 3rem 2rem 1.5rem;
+    max-width: 840px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-back { margin-bottom: 2rem; }
+  .nav-back a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    transition: all 0.15s ease;
+  }
+  .nav-back a:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+
+  /* Filters */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    max-width: 840px;
+    margin: 2rem auto 0;
+    padding: 0 2rem 1rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .filter-row::-webkit-scrollbar { display: none; }
+
+  .cat-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cat-btn:hover { border-color: var(--text); color: var(--text); }
+  .cat-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* Tab Navigation */
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    max-width: 840px;
+    margin: 1rem auto 0;
+    padding: 0 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .tab-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-bottom: 2px solid transparent;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--text); }
+
+  .main {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .search-box { display: flex; gap: 8px; margin-bottom: 2rem; }
+  .search-input {
+    flex: 1;
+    padding: 10px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent); background: white; }
+
+  /* Progress bar */
+  .progress-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .progress-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+  .progress-bar-bg { height: 2px; background: var(--border); border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s ease; }
+
+  /* Card design */
+  .card-scene { perspective: 1200px; cursor: pointer; margin-bottom: 1.5rem; user-select: none; min-height: 220px; }
+  .card-inner { width: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-inner.flipped .card-face.front { display: none; }
+  .card-face {
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    min-height: 220px;
+    box-sizing: border-box;
+  }
+  .card-face.front { position: relative; overflow: hidden; }
+  .card-face.back {
+    position: absolute; inset: 0; transform: rotateY(180deg);
+    background: var(--surface); border-color: var(--accent); height: 100%; overflow: auto;
+    text-align: left; align-items: flex-start; justify-content: flex-start; padding: 2rem;
+  }
+
+  .tag-container { display: flex; gap: 8px; margin-bottom: 0.5rem; }
+  .card-cat-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+  .tag-unit1 { background: var(--green-light); color: var(--green); }
+  .tag-unit2 { background: var(--purple-light); color: var(--purple); }
+  .tag-unit3 { background: var(--amber-light); color: var(--amber); }
+  .tag-unit4 { background: var(--blue-light); color: var(--blue); }
+  .tag-unit5 { background: var(--rose-light); color: var(--rose); }
+  .tag-unit6 { background: var(--teal-light); color: var(--teal); }
+  .tag-subcat { background: #e8e4de; color: var(--muted); }
+
+  .card-q { font-size: clamp(18px, 3vw, 22px); font-weight: 400; line-height: 1.4; color: var(--text); max-width: 600px; }
+  .card-hint { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--border); margin-top: 1rem; }
+
+  .card-a {
+    font-size: 14px; line-height: 1.6; color: var(--text); width: 100%;
+    white-space: pre-line;
+  }
+  .card-a strong { color: var(--accent); font-weight: 600; font-family: 'DM Mono', monospace; font-size: 13px; }
+  .card-detail { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--bg); width: 100%; }
+
+  /* Controls */
+  .controls { display: flex; gap: 10px; align-items: center; margin-bottom: 1.5rem; }
+  .btn {
+    font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+    padding: 10px 20px; border-radius: var(--radius); border: 1px solid var(--border);
+    background: transparent; color: var(--text); cursor: pointer; transition: all 0.15s ease;
+  }
+  .btn:hover:not(:disabled) { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn:disabled { opacity: 0.25; cursor: default; }
+  .btn-shuffle { margin-left: auto; }
+
+  .key-hint { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--border); text-align: center; margin-top: 1rem; }
+
+  /* MC Mode */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 1rem; }
+  .mc-option {
+    padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--text); cursor: pointer; text-align: left;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; transition: all 0.15s ease;
+  }
+  .mc-option:hover { border-color: var(--accent); background: var(--accent-light); }
+  .mc-option.selected { background: var(--text); color: white; border-color: var(--text); }
+  .mc-option.correct { background: var(--green-light); color: var(--green); border-color: var(--green); }
+  .mc-option.incorrect { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+  .results { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 3rem 2rem; text-align: center; display: none; }
+  .results.visible { display: block; }
+  .results-title { font-family: 'DM Mono', monospace; font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .results-stat-grid { display: flex; gap: 16px; justify-content: center; margin: 2rem 0; }
+  .results-stat { padding: 1.5rem; border-radius: var(--radius); min-width: 120px; }
+  .stat-correct { background: var(--green-light); color: var(--green); }
+  .stat-incorrect { background: var(--accent-light); color: var(--accent); }
+  .results-stat .num { font-family: 'DM Mono', monospace; font-size: 2rem; display: block; }
+  .btn-restart { font-family: 'DM Mono', monospace; padding: 12px 32px; border-radius: var(--radius); border: 1px solid var(--text); background: var(--text); color: var(--bg); cursor: pointer; }
+
+  footer { max-width: 840px; margin: 0 auto; padding: 3rem 2rem; border-top: 1px solid var(--border); text-align: center; position: relative; z-index: 1; }
+  .footer-text { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 1rem; }
+  .social-links { display: flex; gap: 1.5rem; justify-content: center; }
+  .social-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); text-decoration: none; padding: 6px 12px; border: 1px solid var(--border); border-radius: 99px; transition: all 0.15s ease; }
+  .social-links a:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  @media (max-width: 600px) {
+    header { padding: 2rem 1.2rem 1rem; }
+    .main { padding: 1rem 1.2rem 3rem; }
+    .filter-row { padding: 0 1.2rem 1rem; }
+    .tabs-nav { padding: 0 1.2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-back">
+    <a href="index.html">← Home</a>
+  </div>
+  <p class="logo">A-Level Chemistry</p>
+  <h1>Organic & Inorganic <span>Reactions</span></h1>
+  <p class="subtitle">All reagents, conditions, mechanisms and observations</p>
+</header>
+
+<div class="filter-row" id="filterRow">
+  <button class="cat-btn active" data-subcat="all">All</button>
+  <button class="cat-btn" data-subcat="alkanes">Alkanes</button>
+  <button class="cat-btn" data-subcat="alkenes">Alkenes</button>
+  <button class="cat-btn" data-subcat="halogenoalkanes">Halogenoalkanes</button>
+  <button class="cat-btn" data-subcat="alcohols">Alcohols</button>
+  <button class="cat-btn" data-subcat="carbonyls">Carbonyls</button>
+  <button class="cat-btn" data-subcat="carboxylic-acids">Carboxylic Acids</button>
+  <button class="cat-btn" data-subcat="acyl-chlorides">Acyl Chlorides</button>
+  <button class="cat-btn" data-subcat="esters">Esters</button>
+  <button class="cat-btn" data-subcat="nitriles">Nitriles</button>
+  <button class="cat-btn" data-subcat="arenes">Arenes</button>
+  <button class="cat-btn" data-subcat="amines">Amines</button>
+  <button class="cat-btn" data-subcat="amino-acids">Amino Acids</button>
+  <button class="cat-btn" data-subcat="inorganic">Groups 1, 2 & 7</button>
+  <button class="cat-btn" data-subcat="transition-metals">Transition Metals</button>
+</div>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="study">Study</button>
+  <button class="tab-btn" data-tab="mc">MC Mode</button>
+</nav>
+
+<div class="main">
+  <!-- STUDY VIEW -->
+  <div class="view active" id="studyView">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search reagents, products, mechanisms...">
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabel">Card 1 of 0</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div id="cardSection">
+      <div class="card-scene" id="cardScene" onclick="flip()">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face front">
+            <div class="tag-container">
+              <span class="card-cat-tag" id="frontUnitTag"></span>
+              <span class="card-cat-tag tag-subcat" id="frontSubcatTag"></span>
+            </div>
+            <p class="card-q" id="questionText"></p>
+            <p class="card-hint">click to reveal full details</p>
+          </div>
+          <div class="card-face back">
+            <div class="tag-container">
+              <span class="card-cat-tag" id="backUnitTag"></span>
+              <span class="card-cat-tag tag-subcat" id="backSubcatTag"></span>
+            </div>
+            <div class="card-a" id="answerText"></div>
+            <p class="card-detail" id="detailText"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prev()">← prev</button>
+        <button class="btn" id="nextBtn" onclick="next()">next →</button>
+        <button class="btn btn-shuffle" onclick="shuffleDeck()">shuffle</button>
+      </div>
+      <p class="key-hint">space = flip &nbsp;·&nbsp; ← → = navigate</p>
+    </div>
+
+    <div class="results" id="resultsScreen">
+      <p class="results-title">Topic Complete!</p>
+      <div class="results-stat-grid">
+        <div class="results-stat" style="background: var(--accent-light); color: var(--accent);">
+          <span class="num" id="totalCount">0</span>
+          <span class="lbl">reactions reviewed</span>
+        </div>
+      </div>
+      <button class="btn-restart" onclick="restartDeck()">review again</button>
+    </div>
+  </div>
+
+  <!-- MC MODE VIEW -->
+  <div class="view" id="mcView">
+    <div class="progress-wrap">
+      <span class="progress-label" id="progressLabelMC">Card 1 of 0</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFillMC" style="width:0%"></div>
+    </div>
+
+    <div id="cardSectionMC">
+      <div class="card-scene" style="cursor: default;">
+        <div class="card-inner">
+          <div class="card-face front">
+            <p class="card-q" id="questionTextMC"></p>
+            <div class="mc-options" id="mcOptions"></div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn btn-shuffle" onclick="shuffleDeck()">shuffle</button>
+      </div>
+    </div>
+
+    <div class="results" id="resultsScreenMC">
+      <p class="results-title">Quiz Finished!</p>
+      <div class="results-stat-grid">
+        <div class="results-stat stat-correct">
+          <span class="num" id="correctNum">0</span>
+          <span class="lbl">correct</span>
+        </div>
+        <div class="results-stat stat-incorrect">
+          <span class="num" id="incorrectNum">0</span>
+          <span class="lbl">incorrect</span>
+        </div>
+      </div>
+      <button class="btn-restart" onclick="restartDeck()">try again</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-text">Full Reaction Reference · Units 1–6</p>
+  <div class="social-links">
+    <a href="https://github.com/saucynandhu" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://instagram.com/nandhu_sauce" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</footer>
+
+<script src="reactions.js"></script>
+<script src="shared.js"></script>
+<script>
+const SUBCAT_LABELS = {
+  alkanes: "Alkanes",
+  alkenes: "Alkenes",
+  halogenoalkanes: "Halogenoalkanes",
+  alcohols: "Alcohols",
+  carbonyls: "Carbonyls",
+  "carboxylic-acids": "Carboxylic Acids",
+  "acyl-chlorides": "Acyl Chlorides",
+  esters: "Esters",
+  nitriles: "Nitriles",
+  arenes: "Arenes",
+  amines: "Amines",
+  "amino-acids": "Amino Acids",
+  inorganic: "Inorganic",
+  "transition-metals": "Transition Metals"
+};
+
+let deck = [];
+let idx = 0;
+let activeSubcat = 'all';
+let searchTerm = '';
+let isFlipped = false;
+
+let correctMC = 0, incorrectMC = 0;
+
+function formatAnswer(text) {
+  return text.split('\n').map(line => {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx !== -1) {
+      const label = line.substring(0, colonIdx);
+      const rest = line.substring(colonIdx);
+      return `<strong>${label}</strong>${rest}`;
+    }
+    return line;
+  }).join('\n');
+}
+
+function getReactionDeck() {
+  let filtered = activeSubcat === 'all' ? [...REACTION_CARDS] : REACTION_CARDS.filter(c => c.subcat === activeSubcat);
+  if (searchTerm) {
+    const q = searchTerm.toLowerCase();
+    filtered = filtered.filter(c => c.q.toLowerCase().includes(q) || c.a.toLowerCase().includes(q));
+  }
+  return filtered;
+}
+
+function renderStudy() {
+  const c = deck[idx];
+  if (!c) {
+    document.getElementById("progressLabel").textContent = "No reactions found";
+    document.getElementById("cardSection").style.display = "none";
+    return;
+  }
+  document.getElementById("cardSection").style.display = "block";
+  document.getElementById("questionText").textContent = c.q;
+  document.getElementById("answerText").innerHTML = formatAnswer(c.a);
+  document.getElementById("detailText").textContent = c.detail;
+  
+  const unitLabel = c.unit.replace('unit', 'Unit ');
+  document.getElementById("frontUnitTag").textContent = unitLabel;
+  document.getElementById("frontUnitTag").className = `card-cat-tag tag-${c.unit}`;
+  document.getElementById("backUnitTag").textContent = unitLabel;
+  document.getElementById("backUnitTag").className = `card-cat-tag tag-${c.unit}`;
+  
+  const subLabel = SUBCAT_LABELS[c.subcat] || c.subcat;
+  document.getElementById("frontSubcatTag").textContent = subLabel;
+  document.getElementById("backSubcatTag").textContent = subLabel;
+  
+  document.getElementById("progressLabel").textContent = `Reaction ${idx + 1} of ${deck.length}`;
+  document.getElementById("progressFill").style.width = ((idx + 1) / deck.length * 100) + "%";
+  document.getElementById("cardInner").classList.remove("flipped");
+  document.getElementById("prevBtn").disabled = idx === 0;
+  document.getElementById("nextBtn").disabled = idx === deck.length - 1;
+  isFlipped = false;
+}
+
+function flip() {
+  if (!deck.length) return;
+  isFlipped = !isFlipped;
+  document.getElementById("cardInner").classList.toggle("flipped", isFlipped);
+}
+
+function next() { if (idx < deck.length - 1) { idx++; renderStudy(); } else { showResults(); } }
+function prev() { if (idx > 0) { idx--; renderStudy(); } }
+
+function showResults() {
+  document.getElementById("cardSection").style.display = "none";
+  document.getElementById("resultsScreen").classList.add("visible");
+  document.getElementById("totalCount").textContent = deck.length;
+}
+
+function restartDeck() {
+  idx = 0;
+  deck = getReactionDeck();
+  document.getElementById("resultsScreen").classList.remove("visible");
+  document.getElementById("resultsScreenMC").classList.remove("visible");
+  document.getElementById("cardSection").style.display = "block";
+  document.getElementById("cardSectionMC").style.display = "block";
+  correctMC = 0; incorrectMC = 0;
+  renderStudy();
+  renderMC();
+}
+
+function shuffleDeck() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  idx = 0;
+  renderStudy();
+  renderMC();
+}
+
+// MC MODE
+function renderMC() {
+  const c = deck[idx];
+  if (!c) return;
+  document.getElementById("questionTextMC").textContent = c.q;
+  
+  const options = [c.a.split('\n')[0]]; // Use Reagents & Conditions as the identifier
+  const otherA = REACTION_CARDS.filter(r => r.id !== c.id).map(r => r.a.split('\n')[0]);
+  while(options.length < 4 && otherA.length > 0) {
+    const rIdx = Math.floor(Math.random() * otherA.length);
+    const val = otherA.splice(rIdx, 1)[0];
+    if (!options.includes(val)) options.push(val);
+  }
+  options.sort(() => Math.random() - 0.5);
+  
+  const container = document.getElementById("mcOptions");
+  container.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-option';
+    btn.textContent = opt.replace('Reagents & Conditions: ', '');
+    btn.onclick = () => selectMC(opt, c.a.split('\n')[0]);
+    container.appendChild(btn);
+  });
+  
+  document.getElementById("progressLabelMC").textContent = `Question ${idx + 1} of ${deck.length}`;
+  document.getElementById("progressFillMC").style.width = ((idx + 1) / deck.length * 100) + "%";
+}
+
+function selectMC(selected, correct) {
+  const options = document.querySelectorAll('.mc-option');
+  options.forEach(opt => {
+    if (opt.textContent === correct.replace('Reagents & Conditions: ', '')) opt.classList.add('correct');
+    else if (opt.textContent === selected.replace('Reagents & Conditions: ', '')) opt.classList.add('incorrect');
+    opt.disabled = true;
+  });
+  
+  if (selected === correct) correctMC++; else incorrectMC++;
+  
+  setTimeout(() => {
+    if (idx < deck.length - 1) {
+      idx++;
+      renderMC();
+    } else {
+      showResultsMC();
+    }
+  }, 1200);
+}
+
+function showResultsMC() {
+  document.getElementById("cardSectionMC").style.display = "none";
+  document.getElementById("resultsScreenMC").classList.add("visible");
+  document.getElementById("correctNum").textContent = correctMC;
+  document.getElementById("incorrectNum").textContent = incorrectMC;
+}
+
+// INIT
+document.addEventListener("DOMContentLoaded", () => {
+  deck = [...REACTION_CARDS];
+  renderStudy();
+  renderMC();
+
+  // Filter logic
+  document.getElementById("filterRow").addEventListener('click', (e) => {
+    if (e.target.classList.contains('cat-btn')) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      activeSubcat = e.target.getAttribute('data-subcat');
+      restartDeck();
+    }
+  });
+
+  // Search logic
+  document.getElementById("searchInput").addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    restartDeck();
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.getAttribute('data-tab') + 'View').classList.add('active');
+      idx = 0;
+      if (btn.getAttribute('data-tab') === 'mc') renderMC(); else renderStudy();
+    });
+  });
+
+  // Keyboard
+  document.addEventListener("keydown", e => {
+    if (document.getElementById("studyView").classList.contains("active")) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    }
+  });
+});
+</script>
+</body>
+</html>

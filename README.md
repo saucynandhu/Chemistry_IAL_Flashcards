@@ -1,6 +1,6 @@
-# 🧪 Organic Chemistry Flashcards
+# 🧪 Chemistry IAL Flashcards
 
-A lightweight, single-file flashcard web app for A-Level organic chemistry — no frameworks, no build step, no dependencies. Just open the HTML file and study.
+A lightweight, multi-page flashcard web app for Pearson Edexcel International A-Level (IAL) Chemistry — covering Units 1 through 6. No frameworks, no build step, no dependencies. Just open `index.html` and study.
 
 **[→ Live site](https://chemistryial.netlify.app/)** 
 
@@ -8,28 +8,32 @@ A lightweight, single-file flashcard web app for A-Level organic chemistry — n
 
 ## What's inside
 
-52 cards covering the core organic reaction pathways:
+140+ cards covering the full IAL Chemistry specification:
 
-| Category | Cards |
+| Unit | Topic |
 |---|---|
-| Aliphatic reactions | 29 |
-| Aromatic reactions | 9 |
-| Grignard reactions | 5 |
-| Functional group tests | 9 |
+| **Unit 1** | Structure, Bonding and Intro to Organic Chemistry |
+| **Unit 2** | Energetics, Group Chemistry, Halogenoalkanes and Alcohols |
+| **Unit 3** | Practical Skills in Chemistry I |
+| **Unit 4** | Rates, Equilibria and Further Organic Chemistry |
+| **Unit 5** | Transition Metals and Organic Nitrogen Chemistry |
+| **Unit 6** | Practical Skills in Chemistry II |
 
-Topics include: alkene addition, alcohol oxidation, halogenoalkane substitution/elimination, esterification, acyl chloride reactions, Friedel-Crafts, nitration, diazotisation, Grignard synthesis, Tollens'/Fehling's/2,4-DNP tests, and more.
+### Special Features
+- **Reactions Reference**: A dedicated page with 75+ reaction cards covering every examinable organic and inorganic transformation, detailed with reagents, conditions, mechanisms, and observations.
+- **Multi-Page Progress**: Track your mastery per unit directly from the home page.
 
 ---
 
 ## Features
 
-- **Flip cards** — click/tap to reveal the answer
-- **Score tracking** — mark each card as ✓ knew it or ✗ missed it
-- **Results screen** — see your percentage at the end of each deck
-- **Category filter** — study one topic at a time or all at once
-- **Shuffle** — randomise the deck order
-- **Keyboard shortcuts** — see below
-- **Works offline** — one HTML file, no server needed (loads Google Fonts if online)
+- **Study Mode** — Classic flip-card style revision.
+- **Multiple Choice Mode** — Test your knowledge with dynamically generated options.
+- **Spaced Repetition** — Cards you struggle with appear more frequently (tracked via local storage).
+- **Mastery Tracking** — Visualise your progress per unit on the home page.
+- **Search & Filter** — Quickly find specific reagents, mechanisms, or topics.
+- **Data Portability** — Export and import your progress and custom cards as JSON.
+- **Keyboard shortcuts** — Optimized for fast desktop revision.
 
 ### Keyboard shortcuts
 
